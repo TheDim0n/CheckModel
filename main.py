@@ -2,7 +2,7 @@ from fastapi import FastAPI, File, UploadFile, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
-from utils import get_model
+from utils import test_model
 
 
 
@@ -16,8 +16,8 @@ templates = Jinja2Templates(directory="templates")
 @app.post("/uploadfile/")
 async def upload_file(file: UploadFile = File(...)):
     file_data = await file.read()
-    model = get_model(file_data=file_data, filename=file.filename)
-    return model.to_json()
+    accuracy = test_model(file_data=file_data, filename=file.filename)
+    return accuracy
 
 
 @app.get("/", response_class=HTMLResponse)
