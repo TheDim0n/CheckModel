@@ -37,4 +37,4 @@ jobs:
           token: ${{ secrets.PAT }}
           commit-message: updating information about projects
           title: Updating information about projects
-          branch: $ {{ github.repository }}
+          branch: update/CheckModel
