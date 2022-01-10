@@ -1,0 +1,37 @@
+name: Create JSON
+
+on:
+  push:
+   paths:
+   - 'README.md'
+
+
+jobs:
+  create-jspn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: project
+      - uses: actions/checkout@v2
+        with:
+          repository: TheDim0n/CreateJSON
+          path: parser
+      - uses: actions/checkout@v2
+        with:
+          repository: TheDim0n/JSONs
+          path: landing
+      - name: Setup Python
+        uses: actions/setup-python@v2.3.1
+        with:
+          python-version: 3.9
+      - name: Create json
+        run: |
+          cd parser
+          python main.py --from=../project --to=../landing
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          path: landing
+          commit-message: updating information about projects
+          title: Updating information about projects
