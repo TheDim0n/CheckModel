@@ -33,5 +33,6 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           path: landing
+          token: ${{ secrets.PAT }}
           commit-message: updating information about projects
           title: Updating information about projects
