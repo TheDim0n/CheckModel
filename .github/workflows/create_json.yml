@@ -35,6 +35,6 @@ jobs:
         with:
           path: landing
           token: ${{ secrets.PAT }}
-          commit-message: updating information about projects
-          title: Updating information about projects
-          branch: "$GITHUB_REPOSITORY"
+          commit-message: updating information about ${{ github.repository }}
+          title: Updating information about ${{ github.repository }}
+          branch: ${{ github.repository }}
