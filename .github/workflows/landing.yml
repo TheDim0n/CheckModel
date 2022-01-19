@@ -1,0 +1,38 @@
+name: Landing
+
+on:
+  push:
+    paths:
+     - 'LANDING.md'
+    branches: [ master ]
+  workflow_dispatch:
+
+
+jobs:
+  parse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: project
+      - uses: actions/checkout@v2
+        with:
+          repository: TheDim0n/Landing-Front
+          ref: parser
+          path: landing
+      - name: Setup Python
+        uses: actions/setup-python@v2.3.1
+        with:
+          python-version: 3.9
+      - name: Parse LANDING.md
+        run: |
+          cd parser
+          python parser/main.py -s ../project -t ./src -r ${{ github.repository }} -b ${{ github.event.repository.default_branch }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          path: landing
+          token: ${{ secrets.token }}
+          commit-message: update information about ${{ github.repository }}
+          title: Update information about ${{ github.repository }}
+          branch: ${{ github.repository }}
